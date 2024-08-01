@@ -4,4 +4,30 @@
 </app-header>
 
 <ion-content >
+
+    <div class="d-flex-center">
+<form [formGroup]="form" class="auth-form">
+
+        <app-custom-input 
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="Correo" 
+        ></app-custom-input>
+                
+        <app-custom-input
+        [control]="form.controls.password"
+        type="password"
+        label="Contraseña" 
+        icon="lock-closed-outline"
+
+        ></app-custom-input>
+    </form>
+    </div>
+
+    
+
+    
+    
 </ion-content>
