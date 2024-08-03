@@ -33,13 +33,12 @@ export class AuthPage implements OnInit {
         .catch((error) => {
           console.log(error);
           this.utilsSvc.presentToast({
-            message : error.message,
-            duration : 2500,
+            message: error.message,
+            duration: 2500,
             color: 'primary',
             position: 'middle',
-            icon: 'alert-cicle-outline'
-
-          })
+            icon: 'alert-cicle-outline',
+          });
         })
         .finally(() => {
           loading.dismiss();
