@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   LoadingController,
   ToastController,
@@ -11,6 +12,7 @@ import {
 export class UtilsService {
   loadingCtrl = inject(LoadingController);
   taoastCtrl = inject(ToastController);
+  router = inject(Router);
 
   //======================loading===============
   loading() {
@@ -21,5 +23,19 @@ export class UtilsService {
   async presentToast(opts?: ToastOptions) {
     const toast = await this.taoastCtrl.create(opts);
     toast.present();
+  }
+  //====================== Enruta a cualquier pagina disponible ===============
+  routerLink(url: string) {
+    return this.router.navigateByUrl(url);
+  }
+
+  //====================== Guarda un elemento en localStorage ===============
+  saveInLocalStorage(key: string, value: any) {
+    return localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  //====================== Enruta a cualquier pagina disponible ===============
+  getFromLocalStorage(key: string) {
+    return JSON.parse(localStorage.getItem(key));
   }
 }
