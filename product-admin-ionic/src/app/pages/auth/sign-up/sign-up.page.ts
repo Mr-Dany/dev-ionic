@@ -21,7 +21,7 @@ export class SignUpPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async submit() {
     if (this.form.valid) {
