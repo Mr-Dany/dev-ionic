@@ -19,7 +19,7 @@ export class AuthPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async submit() {
     if (this.form.valid) {
@@ -28,7 +28,8 @@ export class AuthPage implements OnInit {
       this.firebaseSvc
         .signIn(this.form.value as User)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          this.getUserInfo(res.user.uid)
         })
         .catch((error) => {
           console.log(error);
@@ -45,4 +46,49 @@ export class AuthPage implements OnInit {
         });
     }
   }
+
+  async getUserInfo(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      let path = `user/${uid}`;
+      // delete this.form.value.password;
+
+      this.firebaseSvc
+        .getDocument(path)
+        .then((user: User) => {
+          this.utilsSvc.saveInLocalStorage('user', user);
+          this.utilsSvc.routerLink('/main/home');
+          this.form.reset();
+
+          this.utilsSvc.presentToast({
+            message: `Te damos cordia bienvenida ${user.name}`,
+            duration: 2500,
+            color: 'primary',
+            position: 'middle',
+            icon: 'person-cicle-outline',
+          });
+
+          // await this.firebaseSvc.updteUser(this.form.value.name);
+          // console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+
+          this.utilsSvc.presentToast({
+            message: error.message,
+            duration: 2500,
+            color: 'primary',
+            position: 'middle',
+            icon: 'alert-cicle-outline',
+          });
+
+        })
+        .finally(() => {
+          loading.dismiss();
+        });
+    }
+  }
+
 }
