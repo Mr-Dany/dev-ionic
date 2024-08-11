@@ -5,6 +5,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   updateProfile,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -30,6 +31,10 @@ export class FirebaseService {
   //========ACTUALIZAR USUARIO========//
   updteUser(displayName: string) {
     return updateProfile(getAuth().currentUser, { displayName });
+  }
+  //======== Enviar email para restablecer contraseña ========//
+  sendRecoveryEmail(email: string) {
+    return sendPasswordResetEmail(getAuth(), email)
   }
 
   //======================== BASE DE DATOS ========================//
